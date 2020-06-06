@@ -1,0 +1,8 @@
+user=admin
+password=<replace-this-db-password>
+hosts=<replace-this-db-host>
+dbname=mail
+table = domain
+select_field = domain
+where_field = domain
+additional_conditions = and backupmx = '0' and active = '1'

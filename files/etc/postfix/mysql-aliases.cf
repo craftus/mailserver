@@ -1,0 +1,8 @@
+user=admin
+password=<replace-this-db-password>
+hosts=<replace-this-db-host>
+dbname=mail
+table = alias
+select_field = goto
+where_field = address
+additional_conditions = and active = '1'
