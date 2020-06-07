@@ -33,10 +33,9 @@ RUN apt-get update && \
         dovecot-lmtpd \
         spamassassin
 
-# NOTE: /data/vmail  will be creted by adduser command
 RUN mkdir -p /data/spamassassin/log /www /data/ssl && \
     addgroup --gid 500 vmail && \
-    adduser vmail --uid 500 --gid 500 -q --home /data/vmail --disabled-password --gecos "" && \
+    adduser vmail --uid 500 --gid 500 -q --home /var/vmail --disabled-password --gecos "" && \
     adduser spamd -q --disabled-login  --gecos ""
 
 RUN curl -L https://downloads.sourceforge.net/project/postfixadmin/postfixadmin/postfixadmin-${VERSION_POSTFIXADMIN}/postfixadmin-${VERSION_POSTFIXADMIN}.tar.gz | tar -C /tmp -xz && \
