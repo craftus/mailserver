@@ -6,6 +6,7 @@ PSSW=`doveadm pw -s CRAM-MD5 -p $SETUP_PASSWORD | sed 's/{CRAM-MD5}//'`
 # even though this command will keep running over and over again
 # the env vars won't be applied.
 HASHED_SETUP_PASSWORD=`php /files/generate-setup-password.php "${SETUP_PASSWORD}"`
+SERVER_NAME=`hostname`
 sed -i " s/<replace-with-setup-password-hash>/${HASHED_SETUP_PASSWORD}/;  s/<replace-this-server-name>/${SERVER_NAME}/; s/<replace-this-password>/${SETUP_PASSWORD}/; s/<replace-this-db-password>/${DB_PASSWORD}/; s/<replace-this-db-host>/${DB_HOST}/" \
   /etc/postfix/main.cf \
   /etc/dovecot/dovecot-sql.conf.ext \
@@ -61,6 +62,26 @@ if [ ! -f "/data/ssl/mail.crt" -o ! -f "/data/ssl/mail.key" ]; then
   chown root:vmail /data/ssl/*
 fi
 
+if [ ! -f "/etc/opendkim/TrustedHosts" ]; then
+  mkdir -p /etc/opendkim
+  cat << EOT >  /etc/opendkim/TrustedHosts
+127.0.0.1
+localhost
+192.168.0.1/24
+EOT
+fi
+
+if [ ! -f "/etc/opendkim/SigningTable" ]; then
+  mkdir -p /etc/opendkim
+  touch /etc/opendkim/SigningTable
+fi
+
+if [ ! -f "/etc/opendkim/KeyTable" ]; then
+  mkdir -p /etc/opendkim
+  touch /etc/opendkim/KeyTable
+fi
+
+
 php-fpm7.2
 nginx
 /etc/init.d/postfix start
@@ -73,5 +94,5 @@ if [ ! -f "/data/ssl/private/dh.param" ]; then
   openssl dhparam 4096 > /data/ssl/private/dh.param
   chown 0440 /data/ssl/private/dh.param
 fi
-
+/usr/sbin/opendkim
 /usr/sbin/dovecot -F

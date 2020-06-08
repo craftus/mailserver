@@ -6,3 +6,4 @@ table = mailbox
 select_field = CONCAT(domain, '/', local_part)
 where_field = username
 additional_conditions = and active = '1'
+result_format = %s/

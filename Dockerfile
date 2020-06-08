@@ -18,6 +18,7 @@ RUN apt-get update && \
         mysql-server \
         procps \
         vim \
+        less \
         telnet
 
 RUN curl https://repo.dovecot.org/DOVECOT-REPO-GPG | apt-key add - && \
@@ -31,6 +32,8 @@ RUN apt-get update && \
         dovecot-imapd \
         dovecot-pop3d \
         dovecot-lmtpd \
+        opendkim \
+        opendkim-tools \
         spamassassin
 
 RUN mkdir -p /data/spamassassin/log /www /data/ssl && \
