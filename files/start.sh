@@ -72,21 +72,21 @@ EOT
 fi
 
 if [ ! -f "/etc/opendkim/SigningTable" ]; then
-  mkdir -p /etc/opendkim
+  mkdir -p /etc/opendkim/keys
   touch /etc/opendkim/SigningTable
 fi
 
 if [ ! -f "/etc/opendkim/KeyTable" ]; then
-  mkdir -p /etc/opendkim
+  mkdir -p /etc/opendkim/keys
   touch /etc/opendkim/KeyTable
 fi
 
-
-php-fpm7.2
-nginx
-/etc/init.d/postfix start
-/etc/init.d/rsyslog start
-/etc/init.d/spamassassin start
+service php7.2-fpm start
+service nginx start
+service postfix start
+service rsyslog start
+service spamassassin start
+service opendkim start
 if [ ! -f "/data/ssl/private/dh.param" ]; then
   echo "You didn't provide your own Diffie Hellman parameters, which is ok."
   echo "Generating the new parameters, this may take a long time but will only take place on the first image start (if you correctly mounted /data/ssl)"
@@ -94,5 +94,4 @@ if [ ! -f "/data/ssl/private/dh.param" ]; then
   openssl dhparam 4096 > /data/ssl/private/dh.param
   chown 0440 /data/ssl/private/dh.param
 fi
-/usr/sbin/opendkim
 /usr/sbin/dovecot -F
