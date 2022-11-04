@@ -45,7 +45,7 @@ if [ ! -d "/var/lib/mysql/mysql" ]; then #  -o ! -f "/var/lib/mysql/"
   mysqld --initialize-insecure
 fi
 mysqld_safe&
-sleep 5
+sleep 7
 
 if [ ! -d "/var/lib/mysql/mail" ]; then
   echo "Mail database doesn't seem to exist, creating its user"

@@ -3,10 +3,11 @@ FROM ubuntu:bionic
 LABEL maintainer="Andrey Mikhalchuk <andrey@mikhalchuk.com>"
 
 ENV DEBIAN_FRONTEND=noninteractive \
-    VERSION_POSTFIXADMIN=3.2 \
-    VERSION_DOVECOT=2.3
+    VERSION_POSTFIXADMIN=3.3.8 \
+    VERSION_DOVECOT=2.3.19.1
 
-RUN apt-get update && \
+RUN apt-get upgrade && \
+    apt-get update && \
     apt-get install -y \
         apt-utils \
         curl \
