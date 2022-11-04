@@ -23,7 +23,7 @@ RUN apt-get upgrade && \
         telnet
 
 RUN curl https://repo.dovecot.org/DOVECOT-REPO-GPG | apt-key add - && \
-    echo "deb https://repo.dovecot.org/ce-${VERSION_DOVECOT}-latest/ubuntu/$(lsb_release -cs) $(lsb_release -cs) main" | tee -a /etc/apt/sources.list.d/dovecot.list
+    echo "deb https://repo.dovecot.org/ce-${VERSION_DOVECOT}/ubuntu/$(lsb_release -cs) $(lsb_release -cs) main" | tee -a /etc/apt/sources.list.d/dovecot.list
 
 RUN apt-get update && \
     apt-get install -y \
@@ -42,9 +42,9 @@ RUN mkdir -p /data/spamassassin/log /www /data/ssl && \
     adduser vmail --uid 500 --gid 500 -q --home /var/vmail --disabled-password --gecos "" && \
     adduser spamd -q --disabled-login  --gecos ""
 
-RUN curl -L https://downloads.sourceforge.net/project/postfixadmin/postfixadmin/postfixadmin-${VERSION_POSTFIXADMIN}/postfixadmin-${VERSION_POSTFIXADMIN}.tar.gz | tar -C /tmp -xz && \
+RUN curl -L https://cytranet.dl.sourceforge.net/project/postfixadmin/postfixadmin-${VERSION_POSTFIXADMIN}/PostfixAdmin%20${VERSION_POSTFIXADMIN}.tar.gz | tar -C /tmp -xz && \
     mkdir -p /www/postfixadmin && \
-    mv /tmp/postfixadmin-${VERSION_POSTFIXADMIN}/* /www/postfixadmin && \
+    mv /tmp/postfixadmin-postfixadmin-7d04685/* /www/postfixadmin && \
     mkdir /www/postfixadmin/templates_c && \
     chown www-data:www-data /www/postfixadmin/templates_c
 
